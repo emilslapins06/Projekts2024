@@ -2,6 +2,7 @@ import javax.swing.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        new RegistrationWindow();
         int boardWidth = 360;
         int boardHeight = 640;
 
