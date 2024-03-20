@@ -10,13 +10,20 @@ public class RegistrationWindow extends JFrame implements ActionListener
     private JPasswordField passwordField;
     private JButton registerButton;
 
+    //izveidojam reģistrācijas logu
     public RegistrationWindow() 
     {
-        setTitle("Registration Window"); // Setting title here
-        setSize(300, 150);
+        setTitle("Reģistrācijas logs");
+        setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        //setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 90, 90));
+
+        ImageIcon icon = new ImageIcon("rvtlogo.png");
+        setIconImage(icon.getImage());
 
         JPanel panel = new JPanel();
+
         panel.setLayout(new GridLayout(3, 2));
 
         JLabel usernameLabel = new JLabel("Username:");
@@ -34,10 +41,11 @@ public class RegistrationWindow extends JFrame implements ActionListener
         panel.add(passwordField);
         panel.add(registerButton);
 
-        add(panel); // Adding panel to the frame
+        add(panel);
         setVisible(true);
     }
 
+    //reģistrācija
     @Override
     public void actionPerformed(ActionEvent e) 
     {
