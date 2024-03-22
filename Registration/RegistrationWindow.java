@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -9,6 +11,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton registerButton;
+    private JButton loginButton;
 
     //izveidojam reģistrācijas logu
     public RegistrationWindow() 
@@ -35,11 +38,16 @@ public class RegistrationWindow extends JFrame implements ActionListener
         registerButton = new JButton("Register");
         registerButton.addActionListener(this);
 
+        loginButton = new JButton("Log In");
+        loginButton.addActionListener(this);
+
+
         panel.add(usernameLabel);
         panel.add(usernameField);
         panel.add(passwordLabel);
         panel.add(passwordField);
         panel.add(registerButton);
+        panel.add(loginButton);
 
         add(panel);
         setVisible(true);
@@ -69,6 +77,41 @@ public class RegistrationWindow extends JFrame implements ActionListener
             else 
             {
                 JOptionPane.showMessageDialog(this, "Username or Password cannot be empty.");
+            }
+        }
+        else if (e.getSource() == loginButton)
+        {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            try{
+                BufferedReader csvReader = new BufferedReader(new FileReader("users.csv"));
+                String row;
+                boolean loggedIn = false;
+
+                while((row = csvReader.readLine()) != null)
+                {
+                    String[] data = row.split(",");
+                    if (data.length == 2 && data[0].equals(username) && data[1].equals(password))
+                    {
+                        loggedIn = true;
+                        break;
+                    }
+                }
+
+                csvReader.close();
+
+                if(loggedIn == true)
+                {
+                    JOptionPane.showMessageDialog(this, "Login Successful");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Incorrect username or password");
+                }
+                
+            } catch (IOException ex)
+            {
+                JOptionPane.showMessageDialog(this, "Error");
             }
         }
     }
