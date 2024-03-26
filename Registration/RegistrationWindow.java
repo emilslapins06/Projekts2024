@@ -12,22 +12,20 @@ public class RegistrationWindow extends JFrame implements ActionListener
     private JPasswordField passwordField;
     private JButton registerButton;
     private JButton loginButton;
+    private JPanel homeScreen;
 
-    //izveidojam reģistrācijas logu
+    //izveidojam pirmo ekrānu ar reģistrāciju
     public RegistrationWindow() 
     {
         setTitle("Reģistrācijas logs");
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        //setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 90, 90));
 
-        ImageIcon icon = new ImageIcon("rvtlogo.png");
-        setIconImage(icon.getImage());
+        homeScreen = new JPanel(new CardLayout());
 
-        JPanel panel = new JPanel();
-
-        panel.setLayout(new GridLayout(3, 2));
+        JPanel registrationPanel = new JPanel();
+        registrationPanel.setLayout(new GridLayout(3, 2));
 
         JLabel usernameLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
@@ -41,22 +39,40 @@ public class RegistrationWindow extends JFrame implements ActionListener
         loginButton = new JButton("Log In");
         loginButton.addActionListener(this);
 
+        registrationPanel.add(usernameLabel);
+        registrationPanel.add(usernameField);
+        registrationPanel.add(passwordLabel);
+        registrationPanel.add(passwordField);
+        registrationPanel.add(registerButton);
+        registrationPanel.add(loginButton);
 
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(registerButton);
-        panel.add(loginButton);
+        homeScreen.add(registrationPanel, "registration");
 
-        add(panel);
+        CardLayout cardLayout = (CardLayout) homeScreen.getLayout();
+        cardLayout.show(homeScreen, "registration");
+
+        add(homeScreen);
         setVisible(true);
     }
 
-    //reģistrācija
-    @Override
-    public void actionPerformed(ActionEvent e) 
+    //izveidojam jaunu ekrānu pēc reģistrācijas
+    private JPanel createLoggedInPanel() 
     {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 2));
+
+        JButton button1 = new JButton("Button 1");
+        JButton button2 = new JButton("Button 2");
+
+        panel.add(button1);
+        panel.add(button2);
+
+        return panel;
+    }
+
+    @Override
+    //zemāk izpildās darbības, ja tiek uzspiesta register poga
+    public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registerButton) 
         {
             String username = usernameField.getText();
@@ -69,6 +85,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
                     csvWriter.append(username + "," + password + "\n");
                     csvWriter.close();
                     JOptionPane.showMessageDialog(this, "Registration Successful!");
+                    showLoggedInPanel();
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(this, "Error: Failed to register.");
                     ex.printStackTrace();
@@ -79,19 +96,20 @@ public class RegistrationWindow extends JFrame implements ActionListener
                 JOptionPane.showMessageDialog(this, "Username or Password cannot be empty.");
             }
         }
-        else if (e.getSource() == loginButton)
+        //zemāk izpildās darbības, ja tiek uzspiesta log in poga
+        else if (e.getSource() == loginButton) 
         {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            try{
+            try {
                 BufferedReader csvReader = new BufferedReader(new FileReader("users.csv"));
                 String row;
                 boolean loggedIn = false;
 
-                while((row = csvReader.readLine()) != null)
+                while ((row = csvReader.readLine()) != null) 
                 {
                     String[] data = row.split(",");
-                    if (data.length == 2 && data[0].equals(username) && data[1].equals(password))
+                    if (data.length == 2 && data[0].equals(username) && data[1].equals(password)) 
                     {
                         loggedIn = true;
                         break;
@@ -100,19 +118,29 @@ public class RegistrationWindow extends JFrame implements ActionListener
 
                 csvReader.close();
 
-                if(loggedIn == true)
+                if (loggedIn) 
                 {
                     JOptionPane.showMessageDialog(this, "Login Successful");
-                }
-                else
+                    showLoggedInPanel();
+                } 
+                else 
                 {
                     JOptionPane.showMessageDialog(this, "Incorrect username or password");
                 }
-                
-            } catch (IOException ex)
-            {
+
+            } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error");
             }
         }
     }
+
+    //parāda jaunu ekrānu pēc reģistrācijas
+    private void showLoggedInPanel() 
+    {
+        JPanel loggedInPanel = createLoggedInPanel();
+        homeScreen.add(loggedInPanel, "loggedIn");
+        CardLayout cardLayout = (CardLayout) homeScreen.getLayout();
+        cardLayout.show(homeScreen, "loggedIn");
+    }
+
 }
