@@ -21,6 +21,8 @@ public class RegistrationWindow extends JFrame implements ActionListener
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setCustomIcon("rvtlogo.png");
+        
 
         homeScreen = new JPanel(new CardLayout());
 
@@ -55,14 +57,19 @@ public class RegistrationWindow extends JFrame implements ActionListener
         setVisible(true);
     }
 
+    private void setCustomIcon(String imagePath) 
+    {
+        ImageIcon icon = new ImageIcon(imagePath);
+        setIconImage(icon.getImage());
+    }
     //izveidojam jaunu ekrānu pēc reģistrācijas
     private JPanel createLoggedInPanel() 
     {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 2));
 
-        JButton button1 = new JButton("Button 1");
-        JButton button2 = new JButton("Button 2");
+        JButton button1 = new JButton("Flappy Bird");
+        JButton button2 = new JButton("Snake");
 
         panel.add(button1);
         panel.add(button2);
@@ -118,6 +125,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
 
                 csvReader.close();
 
+                //ja logged in, ļauj veidot jaunu ekrānu
                 if (loggedIn) 
                 {
                     JOptionPane.showMessageDialog(this, "Login Successful");
