@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public class RegistrationWindow extends JFrame implements ActionListener 
 {
-    public JTextField usernameField;
-    public JPasswordField passwordField;
-    public JButton registerButton;
-    public JButton loginButton;
-    public JPanel homeScreen;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JButton registerButton;
+    private JButton loginButton;
+    private JPanel homeScreen;
 
     //izveidojam pirmo ekrānu ar reģistrāciju
     public RegistrationWindow() 
