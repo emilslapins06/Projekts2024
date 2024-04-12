@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public class RegistrationWindow extends JFrame implements ActionListener 
 {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton registerButton;
-    private JButton loginButton;
-    private JPanel homeScreen;
+    public JTextField usernameField;
+    public JPasswordField passwordField;
+    public JButton registerButton;
+    public JButton loginButton;
+    public JPanel homeScreen;
 
     //izveidojam pirmo ekrānu ar reģistrāciju
     public RegistrationWindow() 
@@ -23,30 +23,45 @@ public class RegistrationWindow extends JFrame implements ActionListener
         setLocationRelativeTo(null);
         setCustomIcon("rvtlogo.png");
         
-
         homeScreen = new JPanel(new CardLayout());
 
-        JPanel registrationPanel = new JPanel();
-        registrationPanel.setLayout(new GridLayout(3, 2));
+        JPanel registrationPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel usernameLabel = new JLabel("Username:");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        registrationPanel.add(usernameLabel, gbc);
+
         JLabel passwordLabel = new JLabel("Password:");
+        gbc.gridy = 1;
+        registrationPanel.add(passwordLabel, gbc);
 
         usernameField = new JTextField();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 0.5;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        registrationPanel.add(usernameField, gbc);
+
         passwordField = new JPasswordField();
+        gbc.gridy = 1;
+        registrationPanel.add(passwordField, gbc);
 
         registerButton = new JButton("Register");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        registrationPanel.add(registerButton, gbc);
         registerButton.addActionListener(this);
 
         loginButton = new JButton("Log In");
+        gbc.gridy = 3;
+        registrationPanel.add(loginButton, gbc);
         loginButton.addActionListener(this);
-
-        registrationPanel.add(usernameLabel);
-        registrationPanel.add(usernameField);
-        registrationPanel.add(passwordLabel);
-        registrationPanel.add(passwordField);
-        registrationPanel.add(registerButton);
-        registrationPanel.add(loginButton);
 
         homeScreen.add(registrationPanel, "registration");
 
@@ -62,6 +77,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
         ImageIcon icon = new ImageIcon(imagePath);
         setIconImage(icon.getImage());
     }
+    
     //izveidojam jaunu ekrānu pēc reģistrācijas
     private JPanel createLoggedInPanel() 
     {
