@@ -17,7 +17,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
     //izveidojam pirmo ekrānu ar reģistrāciju
     public RegistrationWindow() 
     {
-        setTitle("Reģistrācijas logs");
+    setTitle("Reģistrācijas logs");
     setSize(800, 300);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
