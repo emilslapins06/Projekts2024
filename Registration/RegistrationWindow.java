@@ -1,3 +1,5 @@
+package Registration;
+import Putns.FlappyBird;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -97,10 +99,34 @@ public class RegistrationWindow extends JFrame implements ActionListener
         JButton button1 = new JButton("Flappy Bird");
         JButton button2 = new JButton("Snake");
 
+        button1.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                launchFlappyBird();
+            }
+        });
+
         panel.add(button1);
         panel.add(button2);
 
         return panel;
+    }
+
+    private void launchFlappyBird()
+    {
+        int boardHeight = 640;
+        int boardWidth = 360;
+        JFrame frame = new JFrame("Flappy Bird");
+        frame.setSize(boardWidth, boardHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only the Flappy Bird window
+
+        FlappyBird flappyBird = new FlappyBird();
+        frame.add(flappyBird);
+        frame.setVisible(true);
     }
 
     @Override

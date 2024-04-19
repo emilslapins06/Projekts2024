@@ -1,3 +1,4 @@
+package Putns;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     boolean gameOver = false;
     double score = 0;
 
-    FlappyBird() {
+    public FlappyBird() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         // setBackground(Color.blue);
         setFocusable(true);
