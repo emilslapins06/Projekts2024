@@ -66,6 +66,12 @@ public class RegistrationWindow extends JFrame implements ActionListener
     registrationPanel.add(loginButton, gbc);
     loginButton.addActionListener(this);
 
+    registerButton.setBackground(Color.WHITE);
+    loginButton.setBackground(Color.WHITE);
+
+    UIManager.put("Button.background", Color.WHITE);
+    UIManager.put("Button.foreground", Color.BLACK);
+    UIManager.put("Button.font", new Font("Arial", Font.PLAIN, 14));
 
     homeScreen.add(registrationPanel, "registration");
 
@@ -145,7 +151,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
 
                 csvReader.close();
 
-                //ja logged in, ļauj veidot jaunu ekrānu
+                //ja logged/registered in, ļauj veidot jaunu ekrānu
                 if (loggedIn) 
                 {
                     JOptionPane.showMessageDialog(this, "Login Successful");
