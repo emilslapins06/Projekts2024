@@ -18,58 +18,62 @@ public class RegistrationWindow extends JFrame implements ActionListener
     public RegistrationWindow() 
     {
         setTitle("Reģistrācijas logs");
-        setSize(800, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setCustomIcon("rvtlogo.png");
-        
-        homeScreen = new JPanel(new CardLayout());
+    setSize(800, 300);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocationRelativeTo(null);
+    setCustomIcon("rvtlogo.png");
 
-        JPanel registrationPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+    homeScreen = new JPanel(new CardLayout());
 
-        JLabel usernameLabel = new JLabel("Username:");
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        registrationPanel.add(usernameLabel, gbc);
+    JPanel registrationPanel = new JPanel(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(5, 5, 5, 5);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel passwordLabel = new JLabel("Password:");
-        gbc.gridy = 1;
-        registrationPanel.add(passwordLabel, gbc);
+    JLabel usernameLabel = new JLabel("Username:");
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.anchor = GridBagConstraints.WEST;
+    registrationPanel.add(usernameLabel, gbc);
 
-        usernameField = new JTextField();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.anchor = GridBagConstraints.LINE_START;
-        registrationPanel.add(usernameField, gbc);
+    JLabel passwordLabel = new JLabel("Password:");
+    gbc.gridy = 1;
+    registrationPanel.add(passwordLabel, gbc);
 
-        passwordField = new JPasswordField();
-        gbc.gridy = 1;
-        registrationPanel.add(passwordField, gbc);
+    usernameField = new JTextField(20);
+    gbc.gridx = 1;
+    gbc.gridy = 0;
+    gbc.weightx = 1.0;
+    gbc.gridwidth = GridBagConstraints.REMAINDER;
+    gbc.anchor = GridBagConstraints.WEST;
+    registrationPanel.add(usernameField, gbc);
 
-        registerButton = new JButton("Register");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        registrationPanel.add(registerButton, gbc);
-        registerButton.addActionListener(this);
+    passwordField = new JPasswordField(20);
+    gbc.gridy = 1;
+    registrationPanel.add(passwordField, gbc);
 
-        loginButton = new JButton("Log In");
-        gbc.gridy = 3;
-        registrationPanel.add(loginButton, gbc);
-        loginButton.addActionListener(this);
+    registerButton = new JButton("Register");
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.weightx = 1.0;
+    gbc.anchor = GridBagConstraints.CENTER;
+    registrationPanel.add(registerButton, gbc);
+    registerButton.addActionListener(this);
 
-        homeScreen.add(registrationPanel, "registration");
+    loginButton = new JButton("Log In");
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    registrationPanel.add(loginButton, gbc);
+    loginButton.addActionListener(this);
 
-        CardLayout cardLayout = (CardLayout) homeScreen.getLayout();
-        cardLayout.show(homeScreen, "registration");
 
-        add(homeScreen);
-        setVisible(true);
+    homeScreen.add(registrationPanel, "registration");
+
+    CardLayout cardLayout = (CardLayout) homeScreen.getLayout();
+    cardLayout.show(homeScreen, "registration");
+
+    add(homeScreen);
+    setVisible(true);
     }
 
     private void setCustomIcon(String imagePath) 
