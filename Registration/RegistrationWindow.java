@@ -214,6 +214,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
     private void showLoggedInPanel() 
     {
         JPanel loggedInPanel = createLoggedInPanel();
+        setTitle("Galvenais Logs");
         homeScreen.add(loggedInPanel, "loggedIn");
         CardLayout cardLayout = (CardLayout) homeScreen.getLayout();
         cardLayout.show(homeScreen, "loggedIn");
