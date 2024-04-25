@@ -1,5 +1,6 @@
 package Registration;
 import Putns.FlappyBird;
+import AdminPanel.AdminPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -93,11 +94,14 @@ public class RegistrationWindow extends JFrame implements ActionListener
     //izveidojam jaunu ekrānu pēc reģistrācijas
     private JPanel createLoggedInPanel() 
     {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 2));
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel("Welcome to our application!");
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.setLayout(new GridLayout(1, 3));
 
         JButton button1 = new JButton("Flappy Bird");
         JButton button2 = new JButton("Snake");
+        JButton button3 = new JButton("Admin Tools");
 
         button1.addActionListener(new ActionListener()
         {
@@ -108,8 +112,20 @@ public class RegistrationWindow extends JFrame implements ActionListener
             }
         });
 
+        button3.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
+
         panel.add(button1);
         panel.add(button2);
+        panel.add(button3);
+
+        panel.add(label, BorderLayout.NORTH);
 
         return panel;
     }
@@ -152,7 +168,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
             } 
             else 
             {
-                JOptionPane.showMessageDialog(this, "Username or Password cannot be empty.");
+                JOptionPane.showMessageDialog(this, "Username or Password cannot be empty or admin.");
             }
         }
         //zemāk izpildās darbības, ja tiek uzspiesta log in poga
