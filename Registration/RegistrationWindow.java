@@ -87,7 +87,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
 
     private void setCustomIcon(String imagePath) 
     {
-        ImageIcon icon = new ImageIcon(imagePath);
+        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
         setIconImage(icon.getImage());
     }
     
@@ -117,7 +117,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                launchAdminPanel();
             }
         });
 
@@ -138,11 +138,39 @@ public class RegistrationWindow extends JFrame implements ActionListener
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only the Flappy Bird window
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         FlappyBird flappyBird = new FlappyBird();
         frame.add(flappyBird);
         frame.setVisible(true);
+    }
+
+    private void launchAdminPanel()
+    {
+        int boardHeight = 640;
+        int boardWidth = 360;
+        JFrame frame = new JFrame("Admin Panel");
+        frame.setSize(boardWidth, boardHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        AdminPanel adminPanel = new AdminPanel();
+        frame.add(adminPanel);
+        frame.setVisible(true);
+    }
+
+    private boolean containsSpecialChar(String str) 
+    {
+        String specialCharacters = "!@#$%^&*()-_+={}[]|:;\"'<>?,./~`";
+        for (char ch : str.toCharArray()) 
+        {
+            if (specialCharacters.contains(String.valueOf(ch))) 
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -153,7 +181,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            if (!username.isEmpty() && !password.isEmpty()) 
+            if (!username.isEmpty() && !password.isEmpty() && !containsSpecialChar(username)) 
             {
                 try {
                     FileWriter csvWriter = new FileWriter("users.csv", true);
@@ -168,7 +196,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
             } 
             else 
             {
-                JOptionPane.showMessageDialog(this, "Username or Password cannot be empty or admin.");
+                JOptionPane.showMessageDialog(this, "Username or Password cannot be empty and Username can't have special characters.");
             }
         }
         //zemāk izpildās darbības, ja tiek uzspiesta log in poga
