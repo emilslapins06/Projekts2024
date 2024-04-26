@@ -147,8 +147,8 @@ public class RegistrationWindow extends JFrame implements ActionListener
 
     private void launchAdminPanel()
     {
-        int boardHeight = 640;
-        int boardWidth = 360;
+        int boardHeight = 140;
+        int boardWidth = 650;
         JFrame frame = new JFrame("Admin Panel");
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);

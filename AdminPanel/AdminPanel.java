@@ -2,6 +2,10 @@ package AdminPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class AdminPanel extends JPanel implements ActionListener {
     public JButton button1;
@@ -10,15 +14,14 @@ public class AdminPanel extends JPanel implements ActionListener {
 
     public AdminPanel() 
     {
-
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        button1 = new JButton("Button 1");
-        button2 = new JButton("Button 2");
-        button3 = new JButton("Button 3");
+        button1 = new JButton("Clear User Registry");
+        button2 = new JButton("Sort User Registry");
+        button3 = new JButton("View User Registry");
 
         button1.addActionListener(this);
         button2.addActionListener(this);
@@ -35,12 +38,26 @@ public class AdminPanel extends JPanel implements ActionListener {
 
     }
 
+    public void clearCSVFile() {
+        try 
+        {
+            FileWriter csvWriter = new FileWriter("users.csv", false);
+            csvWriter.close();
+            JOptionPane.showMessageDialog(this, "User Registry cleared.");
+        } 
+        catch (IOException e) 
+        {
+            System.err.println("Error: Failed to clear User Registry  file.");
+            e.printStackTrace();
+        }
+    }
+
         @Override
         public void actionPerformed(ActionEvent e) {
         
         if (e.getSource() == button1) 
         {
-            System.out.println("Button 1 clicked");
+            clearCSVFile();
         } 
         else if (e.getSource() == button2) 
         {
