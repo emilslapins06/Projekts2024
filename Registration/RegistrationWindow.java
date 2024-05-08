@@ -1,4 +1,4 @@
-package Registration;
+//package Registration;
 import Putns.FlappyBird;
 import AdminPanel.AdminPanel;
 import javax.swing.*;
@@ -112,6 +112,15 @@ public class RegistrationWindow extends JFrame implements ActionListener
             }
         });
 
+        button2.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                launchSnake();
+            }
+        });
+
         button3.addActionListener(new ActionListener() 
         {
             @Override
@@ -143,6 +152,24 @@ public class RegistrationWindow extends JFrame implements ActionListener
         FlappyBird flappyBird = new FlappyBird();
         frame.add(flappyBird);
         frame.setVisible(true);
+    }
+
+    public void launchSnake()
+    {
+        int boardWidth = 600;
+        int boardHeight = boardWidth;
+
+        JFrame frame = new JFrame("Snake");
+        frame.setVisible(true);
+	    frame.setSize(boardWidth, boardHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        SnakeGame snakeGame = new SnakeGame(boardWidth, boardHeight);
+        frame.add(snakeGame);
+        frame.pack();
+        snakeGame.requestFocus();
     }
 
     private void launchAdminPanel()
