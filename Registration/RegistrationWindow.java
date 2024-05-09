@@ -92,16 +92,22 @@ public class RegistrationWindow extends JFrame implements ActionListener
     }
     
     //izveidojam jaunu ekrānu pēc reģistrācijas
-    private JPanel createLoggedInPanel() 
+    private JPanel createLoggedInPanel(String username) 
     {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("Welcome to our application!");
+        JLabel label = new JLabel("Welcome to our application, " + username + "!");
         label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.setLayout(new GridLayout(1, 3));
 
         JButton button1 = new JButton("Flappy Bird");
         JButton button2 = new JButton("Snake");
         JButton button3 = new JButton("Admin Tools");
+
+        if (username.equals("admin")) {
+            button3.addActionListener(e -> launchAdminPanel());
+        } else {
+            button3.setEnabled(false);  
+        }
 
         button1.addActionListener(new ActionListener()
         {
@@ -215,7 +221,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
                     csvWriter.append(username + "," + password + "\n");
                     csvWriter.close();
                     JOptionPane.showMessageDialog(this, "Registration Successful!");
-                    showLoggedInPanel();
+                    showLoggedInPanel(username);
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(this, "Error: Failed to register.");
                     ex.printStackTrace();
@@ -252,7 +258,7 @@ public class RegistrationWindow extends JFrame implements ActionListener
                 if (loggedIn) 
                 {
                     JOptionPane.showMessageDialog(this, "Login Successful");
-                    showLoggedInPanel();
+                    showLoggedInPanel(username);
                 } 
                 else 
                 {
@@ -266,9 +272,9 @@ public class RegistrationWindow extends JFrame implements ActionListener
     }
 
     //parāda jaunu ekrānu pēc reģistrācijas
-    private void showLoggedInPanel() 
+    private void showLoggedInPanel(String username) 
     {
-        JPanel loggedInPanel = createLoggedInPanel();
+        JPanel loggedInPanel = createLoggedInPanel(username);
         setTitle("Galvenais Logs");
         homeScreen.add(loggedInPanel, "loggedIn");
         CardLayout cardLayout = (CardLayout) homeScreen.getLayout();
