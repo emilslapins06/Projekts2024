@@ -1,5 +1,6 @@
-//package Registration;
+package Registration;
 import Putns.FlappyBird;
+import Snake.SnakeGame;
 import AdminPanel.AdminPanel;
 import javax.swing.*;
 import java.awt.*;
@@ -217,11 +218,32 @@ public class RegistrationWindow extends JFrame implements ActionListener
             if (!username.isEmpty() && !password.isEmpty() && !containsSpecialChar(username)) 
             {
                 try {
-                    FileWriter csvWriter = new FileWriter("users.csv", true);
-                    csvWriter.append(username + "," + password + "\n");
-                    csvWriter.close();
-                    JOptionPane.showMessageDialog(this, "Registration Successful!");
-                    showLoggedInPanel(username);
+                    //pārbauda vai username eksistē
+                    BufferedReader csvReader = new BufferedReader(new FileReader("users.csv"));
+                    String row;
+                    boolean usernameExists = false;
+                    while ((row = csvReader.readLine()) != null) {
+                        String[] data = row.split(",");
+                        if (data.length >= 1 && data[0].equals(username)) {
+                            usernameExists = true;
+                            break;
+                        }
+                    }
+
+                    csvReader.close();
+                    if(!usernameExists)
+                    {
+                        FileWriter csvWriter = new FileWriter("users.csv", true);
+                        csvWriter.append(username + "," + password + "\n");
+                        csvWriter.close();
+                        JOptionPane.showMessageDialog(this, "Registration Successful!");
+                        showLoggedInPanel(username);
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Username already taken");
+                    }
+                    
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(this, "Error: Failed to register.");
                     ex.printStackTrace();

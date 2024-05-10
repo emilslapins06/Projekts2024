@@ -1,4 +1,4 @@
-//package Snake;
+package Snake;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     boolean gameOver = false;
 
-    SnakeGame(int boardWidth, int boardHeight) {
+    public SnakeGame(int boardWidth, int boardHeight) {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
