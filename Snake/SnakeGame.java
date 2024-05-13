@@ -1,9 +1,17 @@
 package Snake;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.*;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
@@ -35,7 +43,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     boolean gameOver = false;
 
-    public SnakeGame(int boardWidth, int boardHeight) {
+    SnakeGame(int boardWidth, int boardHeight) {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
@@ -64,13 +72,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void draw(Graphics g) {
-        //Grid Lines
+        /* //Grid Lines
         for(int i = 0; i < boardWidth/tileSize; i++) {
             //(x1, y1, x2, y2)
             g.drawLine(i*tileSize, 0, i*tileSize, boardHeight);
             g.drawLine(0, i*tileSize, boardWidth, i*tileSize); 
         }
-
+ */
         //Food
         g.setColor(Color.red);
         // g.fillRect(food.x*tileSize, food.y*tileSize, tileSize, tileSize);
@@ -78,7 +86,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         //Snake Head
         g.setColor(Color.green);
-        // g.fillRect(snakeHead.x, snakeHead.y, tileSize, tileSize);
         // g.fillRect(snakeHead.x*tileSize, snakeHead.y*tileSize, tileSize, tileSize);
         g.fill3DRect(snakeHead.x*tileSize, snakeHead.y*tileSize, tileSize, tileSize, true);
         
@@ -138,6 +145,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 gameOver = true;
             }
         }
+        
 
         if (snakeHead.x*tileSize < 0 || snakeHead.x*tileSize > boardWidth || //passed left border or right border
             snakeHead.y*tileSize < 0 || snakeHead.y*tileSize > boardHeight ) { //passed top border or bottom border
@@ -151,12 +159,44 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) { //called every x milliseconds by gameLoop timer
+    if (gameOver) {
+        gameLoop.stop();
+        // Delay the game restart by 3 seconds
+        javax.swing.Timer delayTimer = new javax.swing.Timer(3000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                resetGame();
+                gameLoop.start();
+            }
+        });
+        delayTimer.setRepeats(false); // Ensure the timer only runs once
+        delayTimer.start();
+    } else {
         move();
         repaint();
-        if (gameOver) {
-            gameLoop.stop();
-        }
-    }  
+    }
+}
+
+public void resetGame() {
+    // Reset the snake's position to the center of the board
+    snakeHead = new Tile(boardWidth / 2, boardHeight / 2);
+
+    // Reset the snake's velocity
+    velocityX = 0;
+    velocityY = 0;
+
+    // Clear the snake body
+    snakeBody.clear();
+
+    // Reset the food's position
+    do {
+        food = new Tile(random.nextInt(boardWidth), random.nextInt(boardHeight));
+    } while (snakeHead.equals(food));
+
+    // Reset the game's state
+    gameOver = false;
+
+    
+}
 
     @Override
     public void keyPressed(KeyEvent e) {
